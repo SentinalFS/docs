@@ -17,11 +17,17 @@
 
 ## CRDs
 
-* These CRDs can be like
-* These CRDs will be used by daemonset to send information to ebpf program in the linux kernel
-* Regex to be used exclusively
-* They can be in different namespace as it will be applied on pods that are there
-* We can have a global monitoring policy as well
+These CRDs can be like
+
+These CRDs will be used by daemonset to send information to ebpf program in the linux kernel
+
+Regex to be used exclusively
+
+They can be in different namespace as it will be applied on pods that are there
+
+We can have a global monitoring policy as well
+
+We can add dirs as well as depth (How many levels of depth to scan files for?) to it if we don't want to overload the system
 
 ```yaml
 apiVersion: sentinelfs.io/v2
@@ -33,7 +39,14 @@ spec:
     labels:
       - key: app
         value: pipeline
-  files:
+  dirs:
     - path: /app/*
-    - path: /etc/secrets/*
+      depth: 4
+  files:
+    - path: /etc/sample.txt
+      cGroupId: abc123
+      inode: 456789
+    - path: /app/main.py
+      cGroupId: ghi789
+      inode: 123456
 ```
